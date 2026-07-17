@@ -7,6 +7,7 @@
   --color-surface-highest: var(--color-surface-highest);
   --color-surface-low: var(--color-surface-low);
   --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
 
   --color-neutral-dark: var(--color-neutral-dark);
   --color-neutral: var(--color-neutral);
@@ -16,6 +17,9 @@
   --color-error: var(--color-error);
   --color-warning: var(--color-warning);
 
+  /* Shadows */
+  --shadow-card: var(--shadow-card);
+
   /* Font */
   --font-sans: var(--font-inter), sans-serif;
 
@@ -23,18 +27,19 @@
   --text-display-lg: 56px;
   --text-display-lg--line-height: 56px;
 
-  --text-headline-lg: 32px;
-  --text-headline-lg--line-height: 40px;
+  --text-headline-lg: 30px;
+  --text-headline-lg--line-height: 36px;
 
   --text-title-md: 17px;
   --text-title-md--line-height: 27px;
 
   --text-body-md: 14px;
-  --text-body-md--line-height: 22.75px;
+  --text-body-md--line-height: 20px;
 
   --text-label-sm: 11px;
   --text-label-sm--line-height: 16.5px;
   --tracking-label-sm: 1.1px;
+  --tracking-headline-lg: -0.75px;
 }
 
 :root {
@@ -44,6 +49,7 @@
   --color-surface-highest: #d7e2ff;
   --color-surface-low: #f1f3ff;
   --color-background: #f9f9ff;
+  --color-surface: #ffffff;
 
   /* Slate Neutrals */
   --color-neutral-dark: #041b3c;
@@ -54,4 +60,7 @@
   --color-success: #82f9be;
   --color-error: #ba1a1a;
   --color-warning: #ffb300;
+
+  /* Shadows */
+  --shadow-card: 0 24px 48px rgba(4, 27, 60, 0.06);
 }

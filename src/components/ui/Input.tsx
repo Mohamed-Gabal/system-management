@@ -20,7 +20,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           id={rest.id}
-          className={`w-full rounded-lg bg-surface-highest px-3.5 py-2.5 text-body-md text-neutral-dark placeholder:text-neutral outline-none focus:ring-2 focus:ring-primary-container ${className}`}
+          className={`h-12 w-full rounded-lg bg-surface-highest px-3.5 text-body-md text-neutral-dark placeholder:text-neutral outline-none transition ${error ? "ring-2 ring-error" : "focus:ring-2 focus:ring-primary-container"} ${className}`}
           {...rest}
         />
 

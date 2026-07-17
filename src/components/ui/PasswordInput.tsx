@@ -19,7 +19,7 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
       <div>
         <label
           htmlFor={rest.id}
-          className="block text-label-sm font-bold text-neutral tracking-label-sm mb-1.5"
+          className="mb-1.5 block text-label-sm font-semibold uppercase tracking-label-sm text-neutral"
         >
           {label}
         </label>
@@ -27,17 +27,17 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
         <div className="relative">
           <input
             ref={ref}
+            {...rest}
             id={rest.id}
             type={visible ? "text" : "password"}
-            className={`w-full rounded-lg bg-surface-highest px-3.5 py-2.5 pr-10 text-body-md text-neutral-dark placeholder:text-neutral outline-none focus:ring-2 focus:ring-primary-container ${className}`}
-            {...rest}
+            className={`h-12 w-full rounded-lg bg-surface-highest px-3.5 pr-11 text-body-md text-neutral-dark placeholder:text-neutral outline-none transition ${error ? "ring-2 ring-error" : "focus:ring-2 focus:ring-primary-container"} ${className}`}
           />
 
-          {/* Toggle button, switches between the two icons from Figma */}
+          {/* Toggle button */}
           <button
             type="button"
             onClick={() => setVisible((prev) => !prev)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+            className="absolute right-3.5 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center cursor-pointer"
             aria-label={visible ? "Hide password" : "Show password"}
             aria-pressed={visible}
           >
