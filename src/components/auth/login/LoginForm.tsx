@@ -1,12 +1,13 @@
 "use client";
 
+import { login } from "@/services/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormValues, LoginSchema } from "@/lib/validations/login";
 
 import Link from "next/link";
-import Input from "../ui/Input";
-import PasswordInput from "../ui/PasswordInput";
+import Input from "../../ui/Input";
+import PasswordInput from "../../ui/PasswordInput";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -22,48 +23,14 @@ const LoginForm = () => {
     // Clear any previous API error messages
     setApiError("");
 
-    const apiUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const result = await login(data);
 
-    // Make sure the environment variables are defined
-    if (!apiUrl || !anonKey) {
-      setApiError("Environment variables are not defined");
+    if (!result.ok) {
+      setApiError(result.message);
       return;
     }
 
-    // Make the API call to log in the user
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-          rememberMe: data.rememberMe,
-        }),
-      });
-
-      const result = await response.json();
-      console.log("Client:", result);
-
-      // Check if the response is not ok and handle errors
-      if (!response.ok) {
-        setApiError(
-          result.msg || "Invalid email or password. Please try again.",
-        );
-        return;
-      }
-
-      // Check
-      if (data.rememberMe) {
-      }
-      // Navigate to the Project page after successful Login
-      router.push("/");
-    } catch {
-      setApiError("An error occurred while logging in. Please try again.");
-    }
+    router.push("/");
   };
 
   // Initialize the form using react-hook-form and zod for validation

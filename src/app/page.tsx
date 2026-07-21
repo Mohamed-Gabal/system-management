@@ -1,6 +1,11 @@
-import React from "react";
+import RecoveryRedirect from "@/components/auth/RecoveryRedirect";
 
 const HomePage = () => {
-  return <div>HomePage</div>;
+  return (
+    <div>
+      <RecoveryRedirect />
+      <p>Loading...</p>
+    </div>
+  );
 };
 export default HomePage;

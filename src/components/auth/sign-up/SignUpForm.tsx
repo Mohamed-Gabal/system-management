@@ -1,12 +1,13 @@
 "use client";
 
+import { signUp } from "@/services/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema, SignUpFormValues } from "@/lib/validations/sign-up";
 import Input from "@/components/ui/Input";
 import PasswordInput from "@/components/ui/PasswordInput";
 import Button from "@/components/ui/Button";
-import PasswordRequirements from "@/components/sign-up/PasswordRequirements";
+import PasswordRequirements from "@/components/auth/sign-up/PasswordRequirements";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -34,44 +35,14 @@ const SignUpForm = () => {
     // Clear any previous API error messages
     setApiError("");
 
-    const apiUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const result = await signUp(data);
 
-    // Make sure the environment variables are defined
-    if (!apiUrl || !anonKey) {
-      setApiError("Environment variables are not defined");
+    if (!result.ok) {
+      setApiError(result.message);
       return;
     }
 
-    try {
-      const response = await fetch(`${apiUrl}/auth/v1/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          apikey: anonKey,
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-          data: {
-            name: data.name,
-            job_title: data.jobTitle,
-          },
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        // Set the API error message to display to the user
-        setApiError(result.msg || "Something went wrong. Please try again");
-        return;
-      }
-      // Navigate to the home page
-      router.push("/");
-    } catch {
-      setApiError("Unable to connect. Please try again later.");
-    }
+    router.push("/");
   };
 
   return (

@@ -42,7 +42,7 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             aria-pressed={visible}
           >
             <Image
-              src={visible ? eyeOffIcon : eyeIcon}
+              src={visible ? eyeIcon : eyeOffIcon}
               alt=""
               width={18}
               height={18}
