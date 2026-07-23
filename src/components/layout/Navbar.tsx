@@ -30,7 +30,7 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
   // Handler Logout Delete
   const handleLogout = async () => {
     setIsDropdownOpen(false);
-    
+
     const result = await logout();
 
     if (!result.ok) {
