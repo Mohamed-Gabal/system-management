@@ -30,7 +30,7 @@ const LoginForm = () => {
       return;
     }
 
-    router.push("/");
+    router.push("/project");
   };
 
   // Initialize the form using react-hook-form and zod for validation

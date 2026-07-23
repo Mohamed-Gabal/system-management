@@ -2,23 +2,33 @@
 
 import { ReactNode, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
-import Sidebar from "@/components/layout/Sidebar";
+import MobileDrawer from "@/components/layout/Sidebar/MobileDrawer";
+import Sidebar from "@/components/layout/Sidebar/Sidebar";
+import BottomNav from "@/components/layout/BottomNav";
 
 export default function ProjectLayout({ children }: { children: ReactNode }) {
-  // State For Change Menu
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    // Main Application Layout
     <div className="flex min-h-screen">
-      {/* Sidebar Component */}
+      {/* Desktop Sidebar */}
       <Sidebar />
+
+      {/* Mobile Drawer */}
+      <MobileDrawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+
       {/* Main Content Area */}
-      <div className="flex flex-col flex-11">
-        {/* Top Navigation */}
-        <Navbar />
-        {/* Page Content */}
-        <main className="flex-1">{children}</main>
+      <div className="flex flex-1 flex-col">
+        <Navbar
+          isMenuOpen={isMenuOpen}
+          onMenuClick={() => setIsMenuOpen((prev) => !prev)}
+        />
+
+        <main className="flex-1 pb-16 lg:pb-0">{children}</main>
       </div>
+
+      {/* Mobile Bottom Navigation */}
+      <BottomNav />
     </div>
   );
 }

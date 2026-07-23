@@ -8,7 +8,10 @@ const RecoveryRedirect = () => {
 
   useEffect(() => {
     const hash = window.location.hash;
-    if (!hash) return;
+    if (!hash) {
+      router.replace("/login");
+      return;
+    }
 
     const params = new URLSearchParams(hash.substring(1));
     const type = params.get("type");
@@ -18,6 +21,8 @@ const RecoveryRedirect = () => {
       router.replace(
         `/reset-password?access_token=${encodeURIComponent(accessToken)}`,
       );
+    } else {
+      router.replace("/login");
     }
   }, [router]);
 

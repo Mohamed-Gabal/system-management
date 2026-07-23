@@ -42,7 +42,7 @@ const SignUpForm = () => {
       return;
     }
 
-    router.push("/");
+    router.push("/project");
   };
 
   return (
