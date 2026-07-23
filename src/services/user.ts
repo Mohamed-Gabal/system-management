@@ -1,6 +1,6 @@
 export async function getUser() {
   try {
-    const response = await fetch("/api/user", {
+    const response = await fetch("/api/auth/user", {
       cache: "no-store",
     });
 

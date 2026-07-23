@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { getUser } from "@/services/user";
 import menuIcon from "@/assets/icons/menu.svg";
 import Image from "next/image";
+import { logout } from "@/services/auth";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 type NavbarProps = {
   isMenuOpen: boolean;
@@ -19,6 +22,23 @@ type User = {
 
 const Navbar = ({ onMenuClick }: NavbarProps) => {
   const [user, setUser] = useState<User | null>(null);
+
+  // State For Dropdown
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const router = useRouter();
+
+  // Handler Logout Delete
+  const handleLogout = async () => {
+    const result = await logout();
+
+    if (!result.ok) {
+      toast.error(result.message);
+      return;
+    }
+
+    toast.success("Logged out successfully.");
+    router.replace("/login");
+  };
 
   useEffect(() => {
     async function fetchUser() {
@@ -38,7 +58,7 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
     const words = name.trim().split(" ");
 
     if (words.length === 1) {
-      return words[0][0].toUpperCase();
+      return words[0].slice(0, 2).toUpperCase();
     }
 
     return (words[0][0] + words[1][0]).toUpperCase();
@@ -56,8 +76,8 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
         <Image src={menuIcon} alt="" width={24} height={24} />
       </button>
 
-      {/* Right section: user info + avatar */}
-      <div className="flex items-center gap-4">
+      {/* Right section user info + avatar */}
+      <div className="relative flex items-center gap-4">
         {/* User information */}
         <div className="text-right">
           <p className="text-title-md font-semibold text-neutral-dark">
@@ -70,12 +90,25 @@ const Navbar = ({ onMenuClick }: NavbarProps) => {
         </div>
 
         {/* User avatar */}
-        <div
-          className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-surface"
-          aria-hidden="true"
+        <button
+          type="button"
+          onClick={() => setIsDropdownOpen((prev) => !prev)}
+          className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-surface cursor-pointer"
         >
           {getInitials(user?.user_metadata.name || "")}
-        </div>
+        </button>
+        {/* Dropdown For Logout */}
+        {isDropdownOpen && (
+          <div className="absolute right-0 top-12 z-50 w-44 rounded-lg border border-black/10 bg-white p-2 shadow-lg">
+            <button
+              onClick={handleLogout}
+              type="button"
+              className="w-full rounded-md px-3 py-2 text-left text-body-md text-error transition-colors hover:bg-gray-100 cursor-pointer"
+            >
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );

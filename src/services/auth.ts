@@ -1,6 +1,7 @@
 import type { SignUpFormValues } from "@/lib/validations/sign-up";
 import type { LoginFormValues } from "@/lib/validations/login";
 
+// Fetch Api For SignUp Component
 export async function signUp(data: SignUpFormValues) {
   const apiUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -49,9 +50,10 @@ export async function signUp(data: SignUpFormValues) {
   }
 }
 
+// Fetch Api For Login Component
 export async function login(data: LoginFormValues) {
   try {
-    const response = await fetch("/api/login", {
+    const response = await fetch("/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -80,6 +82,7 @@ export async function login(data: LoginFormValues) {
   }
 }
 
+// Fetch Api For ForgotPassword Component
 export async function requestPasswordReset(email: string) {
   const apiUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -128,6 +131,7 @@ export async function requestPasswordReset(email: string) {
   }
 }
 
+// Fetch Api For ResetPassword Component
 export async function resetPassword(accessToken: string, password: string) {
   try {
     const response = await fetch(
@@ -156,6 +160,34 @@ export async function resetPassword(accessToken: string, password: string) {
 
     return {
       ok: true,
+    };
+  } catch {
+    return {
+      ok: false,
+      message: "Unable to connect. Please try again later.",
+    };
+  }
+}
+
+// Fetch Api For Logout Component
+export async function logout() {
+  try {
+    const response = await fetch("api/auth/logout", {
+      method: "POST",
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      return {
+        ok: false,
+        message: result.msg || "Logout failed. Please try again.",
+      };
+    }
+
+    return {
+      ok: true,
+      data: result,
     };
   } catch {
     return {
